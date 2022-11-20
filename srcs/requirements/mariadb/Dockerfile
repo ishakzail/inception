@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM debian:buster
 LABEL description="MariaDB server"
 
 RUN apt-get update
@@ -6,11 +6,12 @@ RUN apt-get install -y mariadb-server
 
 EXPOSE 3306
 
-COPY ./tools /var/www
+COPY ./tools/create_db.sql /tmp/
 
-RUN service mysql start && mysql < /var/www/create_db.sql && rm -f /var/www/create_db.sql;
+RUN service mysql start && mysql -u root < /tmp/create_db.sql
+
+COPY ./conf/config_mariadb.cnf /etc/mysql/mariadb.conf.d/config_maridadb.cnf
 
 CMD ["mysqld"]
-
 
 
