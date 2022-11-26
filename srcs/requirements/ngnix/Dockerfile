@@ -9,7 +9,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -out /etc/ssl/certs/nginx-selfsigned.crt \
     -subj "/C=MA/ST=KHOURIBGA/L=Kkouribga/O=1337/OU=Izail/CN=Inception"
 
-COPY ./conf/config_nginx.cnf /etc/nginx/sites-available/
+COPY ./conf/default /etc/nginx/sites-available/
 
 EXPOSE 443
 
