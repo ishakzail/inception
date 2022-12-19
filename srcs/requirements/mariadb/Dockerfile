@@ -5,17 +5,17 @@ RUN apt-get update && \
 
 EXPOSE 3306
 
-COPY ./tools/db_creation.sh /
-# COPY ./tools/create_db.sql /
+# COPY ./tools/db_creation.sh /
+COPY ./tools/create_db.sql /
 
-RUN chmod +x /db_creation.sh
+# RUN chmod +x /db_creation.sh
 
 
-# RUN service mysql start && mysql -u root < /create_db.sql
+RUN service mysql start && mysql -u root < /create_db.sql
 
-COPY ./conf/config_mariadb.cnf /etc/mysql/mariadb.conf.d/config_maridadb.cnf
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
  
-ENTRYPOINT ["/db_creation.sh"]
-# ENTRYPOINT ["mysqld"]
+# ENTRYPOINT ["/db_creation.sh"]
+ENTRYPOINT ["mysqld"]
 
 # ENTRYPOINT tail -f >/dev/null
