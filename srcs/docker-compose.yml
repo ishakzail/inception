@@ -1,5 +1,18 @@
 version: '3'
 services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    build : ./requirements/nginx/
+    restart: on-failure
+    ports:
+      - 443:443
+    depends_on:
+      - wordpress
+    volumes:
+      - my_wordpress:/var/www/html
+    networks:
+      - inceptionNet
   mariadb:
     image: mariadb
     container_name: mariadb
@@ -7,20 +20,33 @@ services:
     env_file: .env
     ports:
       - 3306:3306
+    restart: on-failure
     volumes:
       - my_database:/var/lib/mysql
+    networks:
+      - inceptionNet
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
-  nginx:
-    image: nginx
-    container_name: nginx
-    build : ./requirements/nginx/
+    networks:
+      - inceptionNet
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    build : ./requirements/wordpress/
     restart: always
+    env_file:
+      - .env
     ports:
-      - 443:443
+      - 9000:9000
+    depends_on:
+      - mariadb
+    volumes:
+      - my_wordpress:/var/www/html
+    networks:
+      - inceptionNet
 volumes:
   my_database:
     driver: local
@@ -28,3 +54,12 @@ volumes:
       type: none
       device: /Users/izail/my_database
       o: bind
+  my_wordpress :
+    driver : local
+    driver_opts:
+      type : none
+      device: /Users/izail/my_wordpress
+      o: bind
+networks:
+  inceptionNet:
+      driver: bridge
