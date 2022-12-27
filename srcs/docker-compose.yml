@@ -46,8 +46,18 @@ services:
       - 9000:9000
     depends_on:
       - mariadb
+      - redis
     volumes:
       - my_wordpress:/var/www/html
+    networks:
+      - inceptionNet
+  redis:
+    image: redis
+    container_name: redis
+    build: ./requirements/bonus/redis/
+    restart: on-failure
+    ports:
+      - 6379:6379
     networks:
       - inceptionNet
 volumes:
@@ -55,13 +65,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/izail/my_database
+      device: /Users/izail/data/my_database
       o: bind
   my_wordpress :
     driver : local
     driver_opts:
       type : none
-      device: /Users/izail/my_wordpress
+      device: /Users/izail/data/my_wordpress
       o: bind
 networks:
   inceptionNet:
