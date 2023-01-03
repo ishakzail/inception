@@ -6,11 +6,11 @@
 #    By: izail <izail@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 15:35:47 by izail             #+#    #+#              #
-#    Updated: 2022/12/31 11:27:44 by izail            ###   ########.fr        #
+#    Updated: 2023/01/03 15:56:16 by izail            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-names=nginx mariadb wordpress redis adminer
+names=nginx mariadb wordpress redis adminer ftp cadvisor
 volumes=srcs_my_database srcs_my_wordpress
 path=/Users/izail
 all:
