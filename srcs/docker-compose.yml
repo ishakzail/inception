@@ -69,18 +69,37 @@ services:
       - 6379:6379
     networks:
       - inceptionNet
+####################### CADVISOR #######################
+  cadvisor:
+    image: cadvisor
+    container_name: cadvisor
+    build: ./requirements/bonus/cadvisor/
+    restart: on-failure
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:ro"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+    ports:
+      - 2000:2000
+    networks:
+      - inceptionNet
 ####################### FTP #######################
-  # ftp:
-  #   image: ftp
-  #   container_name: ftp
-  #   build: ./requirements/bonus/ftp/
-  #   restart: on-failure
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - "21:21"
-  #   networks:
-  #     - inceptionNet
+  ftp:
+    image: ftp
+    container_name: ftp
+    build: ./requirements/bonus/ftp/
+    restart: on-failure
+    env_file:
+      - .env
+    volumes:
+      - my_wordpress:/home/izail/ftp
+    ports:
+      - "21:21"
+    networks:
+      - inceptionNet
+    depends_on:
+      - wordpress
 ####################### VOLUMES #######################
 volumes:
   my_database:
