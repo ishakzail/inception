@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: izail <izail@student.42.fr>                +#+  +:+       +#+         #
+#    By: izail < izail@student.1337.ma >            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 15:35:47 by izail             #+#    #+#              #
-#    Updated: 2023/01/03 15:56:16 by izail            ###   ########.fr        #
+#    Updated: 2023/01/05 05:58:19 by izail            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-names=nginx mariadb wordpress redis adminer ftp cadvisor
+names=nginx mariadb wordpress redis adminer cadvisor website
 volumes=srcs_my_database srcs_my_wordpress
-path=/Users/izail
+path=/home/ishak
 all:
 	mkdir -p ${path}/data/
 	mkdir -p ${path}/data/my_database/
@@ -22,10 +22,10 @@ down:
 	docker-compose -f ./srcs/docker-compose.yml down
 clean: down
 	docker volume rm ${volumes}
-	rm -rf ${path}/data
+	echo "ishak" | sudo -S rm -rf ${path}/data
 fclean:
 	docker rmi ${names}
 	docker system prune --all -f
 rmv:
+	echo "ishak" | sudo -S rm -rf ${path}/data
 	docker volume rm ${volumes}
-	rm -rf ${path}/data
