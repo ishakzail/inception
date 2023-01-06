@@ -71,48 +71,59 @@ services:
       - inceptionNet
 ####################### CADVISOR #######################
   cadvisor:
+    build: ./requirements/bonus/cadvisor/
     image: cadvisor
     container_name: cadvisor
-    build: ./requirements/bonus/cadvisor/
-    restart: on-failure
+    restart: always
     volumes:
-      - "/:/rootfs:ro"
-      - "/var/run:/var/run:ro"
-      - "/sys:/sys:ro"
-      - "/var/lib/docker/:/var/lib/docker:ro"
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
     ports:
       - 2000:2000
+    privileged: true
     networks:
       - inceptionNet
-####################### FTP #######################
-  ftp:
-    image: ftp
-    container_name: ftp
-    build: ./requirements/bonus/ftp/
-    restart: on-failure
-    env_file:
-      - .env
-    volumes:
-      - my_wordpress:/home/izail/ftp
+####################### WEBSITE #######################
+  website:
+    build: ./requirements/bonus/website
+    container_name: website
+    image: website
+    networks:
+      - inceptionNet
     ports:
-      - "21:21"
-    networks:
-      - inceptionNet
-    depends_on:
-      - wordpress
+      - 81:81
+    restart: on-failure
+####################### FTP #######################
+  # ftp:
+  #   image: ftp
+  #   container_name: ftp
+  #   build: ./requirements/bonus/ftp/
+  #   restart: on-failure
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - my_wordpress:/home/izail/ftp
+  #   ports:
+  #     - "21:21"
+  #   networks:
+  #     - inceptionNet
+  #   depends_on:
+  #     - wordpress
 ####################### VOLUMES #######################
 volumes:
   my_database:
     driver: local
     driver_opts:
       type: none
-      device: /Users/izail/data/my_database
+      device: /home/ishak/data/my_database
       o: bind
   my_wordpress :
     driver : local
     driver_opts:
       type : none
-      device: /Users/izail/data/my_wordpress
+      device: /home/ishak/data/my_wordpress
       o: bind
 ####################### NETWORKS #######################
 networks:
