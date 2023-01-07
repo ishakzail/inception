@@ -8,6 +8,3 @@ COPY ./tools/script.sh /
 RUN chmod +x script.sh
 EXPOSE 6379
 ENTRYPOINT [ "/bin/sh", "script.sh" ]
-# ENTRYPOINT ["./script.sh"]
-# ENTRYPOINT redis-server --protected-mode no
-# CMD redis-server --protected-mode no

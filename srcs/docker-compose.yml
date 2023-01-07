@@ -95,35 +95,19 @@ services:
     ports:
       - 81:81
     restart: on-failure
-####################### FTP #######################
-  # ftp:
-  #   image: ftp
-  #   container_name: ftp
-  #   build: ./requirements/bonus/ftp/
-  #   restart: on-failure
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - my_wordpress:/home/izail/ftp
-  #   ports:
-  #     - "21:21"
-  #   networks:
-  #     - inceptionNet
-  #   depends_on:
-  #     - wordpress
 ####################### VOLUMES #######################
 volumes:
   my_database:
     driver: local
     driver_opts:
       type: none
-      device: /home/ishak/data/my_database
+      device: /home/izail/data/my_database
       o: bind
   my_wordpress :
     driver : local
     driver_opts:
       type : none
-      device: /home/ishak/data/my_wordpress
+      device: /home/izail/data/my_wordpress
       o: bind
 ####################### NETWORKS #######################
 networks:

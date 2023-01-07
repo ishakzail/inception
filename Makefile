@@ -12,7 +12,7 @@
 
 names=nginx mariadb wordpress redis adminer cadvisor website
 volumes=srcs_my_database srcs_my_wordpress
-path=/home/ishak
+path=/home/izail
 all:
 	mkdir -p ${path}/data/
 	mkdir -p ${path}/data/my_database/
@@ -22,10 +22,10 @@ down:
 	docker-compose -f ./srcs/docker-compose.yml down
 clean: down
 	docker volume rm ${volumes}
-	echo "ishak" | sudo -S rm -rf ${path}/data
+	echo "1234" | sudo -S rm -rf ${path}/data
 fclean:
 	docker rmi ${names}
 	docker system prune --all -f
 rmv:
-	echo "ishak" | sudo -S rm -rf ${path}/data
+	echo "1234" | sudo -S rm -rf ${path}/data
 	docker volume rm ${volumes}
